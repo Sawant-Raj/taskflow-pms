@@ -50,6 +50,10 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                 arguments: project.id,
               );
             },
+            trailing: IconButton(
+              onPressed: () => _confirmDeleteProject(context, project.id),
+              icon: Icon(Icons.delete, color: Colors.red),
+            ),
           );
         },
       ),
@@ -58,6 +62,34 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
           Navigator.pushNamed(context, AppRoutes.addProject);
         },
         child: const Icon(Icons.add_outlined),
+      ),
+    );
+  }
+
+  void _confirmDeleteProject(BuildContext context, String projectId) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Delete Project"),
+        content: const Text("All tasks inside will be lost."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+
+              await context.read<ProjectProvider>().deleteProject(projectId);
+
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text("Project deleted")));
+            },
+            child: Text('Delete'),
+          ),
+        ],
       ),
     );
   }

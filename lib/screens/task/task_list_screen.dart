@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskflow_pms/providers/task_provider.dart';
+import 'package:taskflow_pms/routes/app_routes.dart';
 import 'package:taskflow_pms/widgets/task_card.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -11,15 +12,19 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
+  String? projectId;
+
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    Future.microtask(() {
-      final projectId = ModalRoute.of(context)!.settings.arguments as String;
+    if (projectId == null) {
+      projectId = ModalRoute.of(context)!.settings.arguments as String;
 
-      context.read<TaskProvider>().fetchTasks(projectId);
-    });
+      Future.microtask(() {
+        context.read<TaskProvider>().fetchTasks(projectId!);
+      });
+    }
   }
 
   @override
@@ -29,6 +34,16 @@ class _TaskListScreenState extends State<TaskListScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("Tasks")),
       body: _buildBody(provider),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            AppRoutes.addEditTask,
+            arguments: projectId,
+          );
+        },
+        child: const Icon(Icons.add_outlined),
+      ),
     );
   }
 
@@ -50,11 +65,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
       itemBuilder: (context, index) {
         final task = provider.tasks[index];
 
-        return TaskCard(
-          title: task.title,
-          description: task.description,
-          statusName: task.status.name,
-        );
+        return TaskCard(task: task);
       },
     );
   }

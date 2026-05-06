@@ -11,15 +11,15 @@ class ProjectService {
     );
   }
 
-  Future<ProjectModel> createProject(ProjectModel projectModel) async {
-    final data = await _api.post('projects', projectModel.toJson());
+  Future<ProjectModel> createProject(ProjectModel project) async {
+    final data = await _api.post('projects', project.toJson());
     return ProjectModel.fromJson(data);
   }
 
-  Future<ProjectModel> updateProject(ProjectModel projectModel) async {
+  Future<ProjectModel> updateProject(ProjectModel project) async {
     final data = await _api.put(
-      'projects/${projectModel.id}',
-      projectModel.toJson(),
+      'projects/${project.id}',
+      project.toJson(),
     );
     return ProjectModel.fromJson(data);
   }

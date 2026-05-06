@@ -14,13 +14,13 @@ class TaskService {
     );
   }
 
-  Future<TaskModel> createTask(TaskModel taskModel) async {
-    final data = await _api.post('tasks', taskModel.toJson());
+  Future<TaskModel> createTask(TaskModel task) async {
+    final data = await _api.post('tasks', task.toJson());
     return TaskModel.fromJson(data);
   }
 
-  Future<TaskModel> updateTask(TaskModel taskModel) async {
-    final data = await _api.put('tasks/${taskModel.id}', taskModel.toJson());
+  Future<TaskModel> updateTask(TaskModel task) async {
+    final data = await _api.put('tasks/${task.id}', task.toJson());
     return TaskModel.fromJson(data);
   }
 

@@ -32,14 +32,14 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     });
 
     try {
-      final ProjectModel projectModel = ProjectModel(
+      final ProjectModel project = ProjectModel(
         id: '',
         title: title,
         description: desc,
         createdBy: 'user123',
       );
 
-      await context.read<ProjectProvider>().addProject(projectModel);
+      await context.read<ProjectProvider>().addProject(project);
 
       if (!mounted) return;
 

@@ -52,7 +52,7 @@ class _AddEditTaskScreenState extends State<AddEditTaskScreen> {
     });
 
     try {
-      final taskModel = TaskModel(
+      final task = TaskModel(
         id: '',
         projectId: projectId,
         title: title,
@@ -62,7 +62,7 @@ class _AddEditTaskScreenState extends State<AddEditTaskScreen> {
         dueDate: _dueDate,
       );
 
-      await context.read<TaskProvider>().addTask(taskModel);
+      await context.read<TaskProvider>().addTask(task);
 
       if (!mounted) return;
 

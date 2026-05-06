@@ -28,11 +28,22 @@ class ProjectProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addProject(ProjectModel projectModel) async {
+  Future<void> addProject(ProjectModel project) async {
     try {
-      final newProject = await _service.createProject(projectModel);
+      final newProject = await _service.createProject(project);
 
       _projects.add(newProject);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteProject(String id) async {
+    try {
+      await _service.deleteProject(id);
+
+      _projects.removeWhere((p) => p.id == id);
       notifyListeners();
     } catch (e) {
       rethrow;
