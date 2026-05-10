@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskflow_pms/models/enums/task_status.dart';
 import 'package:taskflow_pms/models/task_model.dart';
 import 'package:taskflow_pms/providers/task_provider.dart';
+import 'package:taskflow_pms/providers/auth_provider.dart';
 
 class AddEditTaskScreen extends StatefulWidget {
   const AddEditTaskScreen({super.key});
@@ -58,7 +57,7 @@ class _AddEditTaskScreenState extends State<AddEditTaskScreen> {
         title: title,
         description: description,
         status: _selectedStatus,
-        assignedTo: 'user123',
+        assignedTo: context.read<AuthProvider>().user?.uid ?? '',
         dueDate: _dueDate,
       );
 

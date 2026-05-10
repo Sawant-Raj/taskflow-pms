@@ -2,14 +2,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taskflow_pms/core/theme/app_theme.dart';
 import 'package:taskflow_pms/providers/auth_provider.dart';
 import 'package:taskflow_pms/providers/project_provider.dart';
 import 'package:taskflow_pms/providers/task_provider.dart';
 import 'package:taskflow_pms/routes/app_routes.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -35,6 +38,7 @@ class MyAppView extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Taskflow PMS',
+      theme: AppTheme.lightTheme,
       initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,
     );

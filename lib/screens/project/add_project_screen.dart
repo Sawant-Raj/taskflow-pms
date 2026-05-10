@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskflow_pms/models/project_model.dart';
+import 'package:taskflow_pms/providers/auth_provider.dart';
 import 'package:taskflow_pms/providers/project_provider.dart';
 
 class AddProjectScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         id: '',
         title: title,
         description: desc,
-        createdBy: 'user123',
+        createdBy: context.read<AuthProvider>().user?.uid ?? '',
       );
 
       await context.read<ProjectProvider>().addProject(project);

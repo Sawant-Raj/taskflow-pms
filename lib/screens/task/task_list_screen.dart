@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taskflow_pms/providers/task_provider.dart';
 import 'package:taskflow_pms/routes/app_routes.dart';
+import 'package:taskflow_pms/widgets/empty_state.dart';
+import 'package:taskflow_pms/widgets/loading_state.dart';
 import 'package:taskflow_pms/widgets/task_card.dart';
+
+import '../../widgets/error_state.dart';
 
 class TaskListScreen extends StatefulWidget {
   const TaskListScreen({super.key});
@@ -49,24 +53,29 @@ class _TaskListScreenState extends State<TaskListScreen> {
 
   Widget _buildBody(TaskProvider provider) {
     if (provider.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return LoadingState();
     }
 
     if (provider.error != null) {
-      return Center(child: Text(provider.error!));
+      return ErrorState(message: provider.error ?? 'Error!');
     }
 
     if (provider.tasks.isEmpty) {
-      return const Center(child: Text("No tasks found"));
+      return EmptyState(message: 'No tasks found');
     }
 
-    return ListView.builder(
-      itemCount: provider.tasks.length,
-      itemBuilder: (context, index) {
-        final task = provider.tasks[index];
-
-        return TaskCard(task: task);
+    return RefreshIndicator(
+      onRefresh: () async {
+        await provider.fetchTasks(projectId ?? '');
       },
+      child: ListView.builder(
+        itemCount: provider.tasks.length,
+        itemBuilder: (context, index) {
+          final task = provider.tasks[index];
+
+          return TaskCard(task: task);
+        },
+      ),
     );
   }
 }

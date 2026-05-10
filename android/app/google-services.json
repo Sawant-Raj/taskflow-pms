@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "674334010678",
+    "project_id": "taskflow-pms",
+    "storage_bucket": "taskflow-pms.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674334010678:android:e07450972f67f371251797",
+        "android_client_info": {
+          "package_name": "com.example.taskflow_pms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS5l82DflMFqcu78mU6P1fVm9TK1_EOkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
