@@ -11,6 +11,20 @@ class ProjectModel {
     required this.createdBy,
   });
 
+  ProjectModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? createdBy,
+  }) {
+    return ProjectModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      createdBy: createdBy ?? this.createdBy,
+    );
+  }
+
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
     return ProjectModel(
       id: json['id'],
@@ -22,7 +36,7 @@ class ProjectModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id.trim(),
+      'id': id,
       'title': title.trim(),
       'description': description.trim(),
       'createdBy': createdBy.trim(),

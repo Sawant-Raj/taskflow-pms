@@ -23,10 +23,10 @@ class TaskProvider with ChangeNotifier {
       _tasks = await _service.fetchTasks(projectId);
     } catch (e) {
       _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   Future<void> addTask(TaskModel task) async {
@@ -40,19 +40,28 @@ class TaskProvider with ChangeNotifier {
     }
   }
 
+  Future<void> editTask(TaskModel task) async {
+    try {
+      final updatedTask = await _service.updateTask(task);
+
+      final index = _tasks.indexWhere((p) => p.id == updatedTask.id);
+
+      if (index != -1) {
+        _tasks[index] = updatedTask;
+      }
+
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> updateTaskStatus(String taskId, TaskStatus status) async {
     try {
       final index = _tasks.indexWhere((task) => taskId == task.id);
       if (index == -1) return;
 
-      final updatedTask = TaskModel(
-        id: _tasks[index].id,
-        projectId: _tasks[index].projectId,
-        title: _tasks[index].title,
-        description: _tasks[index].description,
-        status: status,
-        dueDate: _tasks[index].dueDate,
-      );
+      final updatedTask = _tasks[index].copyWith(status: status);
 
       await _service.updateTask(updatedTask);
 

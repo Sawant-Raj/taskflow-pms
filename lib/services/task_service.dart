@@ -2,7 +2,7 @@ import 'package:taskflow_pms/models/task_model.dart';
 import 'package:taskflow_pms/services/api_service.dart';
 
 class TaskService {
-  ApiService _api = ApiService();
+  final ApiService _api = ApiService();
 
   Future<List<TaskModel>> fetchTasks(String projectId) async {
     final data = await _api.get('tasks');

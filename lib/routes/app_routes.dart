@@ -1,21 +1,21 @@
-import 'package:taskflow_pms/screens/auth/login_screen.dart';
-import 'package:taskflow_pms/screens/project/add_project_screen.dart';
+import 'package:taskflow_pms/screens/auth/auth_screen.dart';
 import 'package:taskflow_pms/screens/project/project_list_screen.dart';
-import 'package:taskflow_pms/screens/task/add_edit_task_screen.dart';
+import 'package:taskflow_pms/screens/task/task_form_screen.dart';
 import 'package:taskflow_pms/screens/task/task_list_screen.dart';
+import '../screens/project/project_form_screen.dart';
 
 class AppRoutes {
-  static const login = '/login';
-  static const projectList = 'project-list';
-  static const addProject = '/add-project';
-  static const taskList = '/task-list';
-  static const addEditTask = '/add-edit-task';
+  static const auth = '/auth';
+  static const projectList = '/projects';
+  static const projectForm = '/project-form';
+  static const taskList = '/tasks';
+  static const taskForm = '/task-form';
 
   static final routes = {
-    login: (context) => const LoginScreen(),
+    auth: (context) => const AuthScreen(),
     projectList: (context) => const ProjectListScreen(),
-    addProject: (context) => const AddProjectScreen(),
+    projectForm: (context) => const ProjectFormScreen(),
     taskList: (context) => const TaskListScreen(),
-    addEditTask: (context) => const AddEditTaskScreen(),
+    taskForm: (context) => const TaskFormScreen(),
   };
 }

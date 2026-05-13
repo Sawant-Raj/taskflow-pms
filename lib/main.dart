@@ -1,4 +1,4 @@
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +39,9 @@ class MyAppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Taskflow PMS',
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
+      initialRoute: firebase_auth.FirebaseAuth.instance.currentUser != null
+          ? AppRoutes.projectList
+          : AppRoutes.auth,
       routes: AppRoutes.routes,
     );
   }

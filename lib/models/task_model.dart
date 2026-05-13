@@ -19,6 +19,26 @@ class TaskModel {
     required this.dueDate,
   });
 
+  TaskModel copyWith({
+    String? id,
+    String? projectId,
+    String? title,
+    String? description,
+    TaskStatus? status,
+    String? assignedTo,
+    DateTime? dueDate,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      projectId: projectId ?? this.projectId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      status: status ?? this.status,
+      assignedTo: assignedTo ?? this.assignedTo,
+      dueDate: dueDate ?? this.dueDate,
+    );
+  }
+
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
       id: json['id'],
@@ -34,11 +54,11 @@ class TaskModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'projectId': projectId,
-      'title': title,
-      'description': description,
+      'projectId': projectId.trim(),
+      'title': title.trim(),
+      'description': description.trim(),
       'status': statusToString(status),
-      'assignedTo': assignedTo,
+      'assignedTo': assignedTo?.trim(),
       'dueDate': dueDate?.toIso8601String(),
     };
   }

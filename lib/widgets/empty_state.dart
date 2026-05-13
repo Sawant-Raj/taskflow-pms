@@ -10,9 +10,9 @@ class EmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.search_off_outlined),
+          const Icon(Icons.search_off_outlined, size: 48, color: Colors.grey),
           const SizedBox(height: 12),
-          Text(message),
+          Text(message, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );

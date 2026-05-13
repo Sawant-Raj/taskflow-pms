@@ -22,10 +22,10 @@ class ProjectProvider with ChangeNotifier {
       _projects = await _service.fetchProjects();
     } catch (e) {
       _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   Future<void> addProject(ProjectModel project) async {
@@ -33,6 +33,22 @@ class ProjectProvider with ChangeNotifier {
       final newProject = await _service.createProject(project);
 
       _projects.add(newProject);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> editProject(ProjectModel project) async {
+    try {
+      final updatedProject = await _service.updateProject(project);
+
+      final index = _projects.indexWhere((p) => p.id == updatedProject.id);
+
+      if (index != -1) {
+        _projects[index] = updatedProject;
+      }
+
       notifyListeners();
     } catch (e) {
       rethrow;

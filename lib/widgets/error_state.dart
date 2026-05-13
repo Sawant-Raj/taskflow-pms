@@ -10,9 +10,9 @@ class ErrorState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.error_outline, size: 60),
+          const Icon(Icons.error_outline, size: 60, color: Colors.red),
           const SizedBox(height: 12),
-          Text(message),
+          Text(message, textAlign: TextAlign.center),
         ],
       ),
     );

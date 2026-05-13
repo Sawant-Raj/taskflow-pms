@@ -13,16 +13,13 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  bool get isAuthenticated => FirebaseAuth.instance.currentUser != null;
+  bool get isAuthenticated => _user != null;
 
   AuthProvider() {
     _user = _authService.currentUser;
   }
 
-  Future<bool> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> login({required String email, required String password}) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -56,11 +53,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
-  Future<bool> signUp({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> signUp({required String email, required String password}) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -105,6 +98,8 @@ class AuthProvider with ChangeNotifier {
   Future<void> logout() async {
     await _authService.logout();
 
+    _isLoading = false;
+    _error = null;
     _user = null;
     notifyListeners();
   }

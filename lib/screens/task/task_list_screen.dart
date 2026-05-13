@@ -16,17 +16,17 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  String? projectId;
+  String? _projectId;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (projectId == null) {
-      projectId = ModalRoute.of(context)!.settings.arguments as String;
+    if (_projectId == null) {
+      _projectId = ModalRoute.of(context)!.settings.arguments as String;
 
       Future.microtask(() {
-        context.read<TaskProvider>().fetchTasks(projectId!);
+        context.read<TaskProvider>().fetchTasks(_projectId!);
       });
     }
   }
@@ -42,8 +42,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
         onPressed: () {
           Navigator.pushNamed(
             context,
-            AppRoutes.addEditTask,
-            arguments: projectId,
+            AppRoutes.taskForm,
+            arguments: _projectId,
           );
         },
         child: const Icon(Icons.add_outlined),
@@ -53,7 +53,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
 
   Widget _buildBody(TaskProvider provider) {
     if (provider.isLoading) {
-      return LoadingState();
+      return LoadingState(text: 'Tasks');
     }
 
     if (provider.error != null) {
@@ -66,9 +66,13 @@ class _TaskListScreenState extends State<TaskListScreen> {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await provider.fetchTasks(projectId ?? '');
+        await provider.fetchTasks(_projectId!);
       },
       child: ListView.builder(
+        padding: const EdgeInsets.only(
+          top: 8,
+          bottom: 100,
+        ),
         itemCount: provider.tasks.length,
         itemBuilder: (context, index) {
           final task = provider.tasks[index];
